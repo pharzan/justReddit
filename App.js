@@ -1,17 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  FlatList,
-  Alert,
-  SearchBar,
-  WebView,
-  Dimensions,
-  RefreshControl
+  StyleSheet
 } from "react-native";
 
 import { Icon } from "react-native-elements";
@@ -23,18 +12,12 @@ import moment from "moment";
 
 import {Settings} from './components/Settings.js';
 
+import {Home} from './components/Home.js';
+
 console.log("^^^",Settings)
 
 
-class Home extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
-}
+
 
 const MainNavigator = createStackNavigator({
   Home: { screen: Home },
