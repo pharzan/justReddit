@@ -1,8 +1,6 @@
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import moment from "moment";
 
-import {Settings} from './components/Settings.js';
-
 import {Home} from './components/Home.js';
 
 const MainNavigator = createStackNavigator({
