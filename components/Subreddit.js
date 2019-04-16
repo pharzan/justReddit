@@ -8,8 +8,7 @@ import {
   StyleSheet,
   Dimensions
 } from "react-native";
-import { Icon } from "react-native-elements";
-
+import { Icon, ListItem } from "react-native-elements";
 import { Settings } from "./Settings";
 import moment from "moment";
 export class Subreddit extends React.Component {
@@ -96,12 +95,15 @@ export class Subreddit extends React.Component {
               backgroundColor: "red"
             }}
             data={this.state.children}
+            keyExtractor={post => post.id}
             renderItem={post => {
               // console.log("Item",item)
               return (
-                <TouchableOpacity ref={ref => {
-                  this.itemRef = ref;
-                }}
+                <TouchableOpacity
+                  ref={ref => {
+                    this.itemRef = ref;
+                  }}
+                  key={post.item.name}
                   onLayout={e => {
                     const boundary = {
                       width: e.nativeEvent.layout.width,
@@ -112,13 +114,13 @@ export class Subreddit extends React.Component {
                     this.boundaries.push(boundary);
                   }}
                   onPress={() => {
-                    navigate("Story", { parent: item });
-                  }}>
-                <Text>{post.item.title}</Text>
-              </TouchableOpacity>
-                )
+                    navigate("Comments", { post: post });
+                  }}
+                >
+                  <ListItem title={post.item.title} />
+                </TouchableOpacity>
+              );
             }}
-            // keyExtractor={item => item.data.name}
             onEndReached={i => {
               this.handleLoadMore();
             }}
