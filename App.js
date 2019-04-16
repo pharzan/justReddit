@@ -1,5 +1,4 @@
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import moment from "moment";
 
 import {Home} from './components/Home.js';
 import {Subreddit} from './components/Subreddit.js';
@@ -10,6 +9,7 @@ const MainNavigator = createStackNavigator({
   Subreddit: { screen: Subreddit },
   Comments: { screen: Comments },
 });
+
 const App = createAppContainer(MainNavigator);
 export default App;
 
