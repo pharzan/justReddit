@@ -34,7 +34,7 @@ export class Home extends React.Component {
             <TouchableOpacity
               key={i}
               onPress={() => {
-                navigate("Home", {
+                navigate("Subreddit", {
                   navigate: navigate,
                   subbreddit: subreddit
                 });
