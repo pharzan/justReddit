@@ -2,10 +2,11 @@ import React from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import moment from "moment";
 
+let commentStrings = [];
 export class Comments extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { comments: {}, post: {} };
+    this.state = { comments: {}, post: {}, commentStrings: [] };
     this.loaded = false;
   }
 
@@ -27,7 +28,13 @@ export class Comments extends React.Component {
         } else if (typeof comments[property] === "object") {
           if (comments[property] != null) {
             if (comments[property].body != undefined) {
-              console.log(".".repeat(j), property, comments[property].body);
+              this.setState({
+                commentStrings: commentStrings.push(
+                  ".".repeat(j) + comments[property].body
+                )
+              });
+              // console.log(".".repeat(j), property, comments[property].body);
+              console.log(this.state.commentStrings);
               j += 1;
             }
             this.parseComments(comments[property], i, j);
@@ -38,7 +45,7 @@ export class Comments extends React.Component {
       }
     }
   }
-  
+
   getComments() {
     // const url = `https://www.reddit.com/r/${subreddit}/comments/${postId}.json`;
 
@@ -66,6 +73,9 @@ export class Comments extends React.Component {
   render() {
     return (
       <View>
+        {commentStrings.map((c,i) => (
+          <Text key={i} >{c}</Text>
+        ))}
         <Text>{this.state.post.title}</Text>
       </View>
     );
