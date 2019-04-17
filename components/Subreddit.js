@@ -6,7 +6,8 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  Image
 } from "react-native";
 import { Icon, ListItem } from "react-native-elements";
 import { Settings } from "./Settings";
@@ -34,6 +35,7 @@ export class Subreddit extends React.Component {
 
   getAfter(subreddit, before, after) {
     const url = `https://api.pushshift.io/reddit/submission/search/?subreddit=${subreddit}&after=${after}&before=${before}&size=100`;
+    console.log(url)
     return new Promise((resolve, reject) => {
       fetch(url)
         .then(res => res.json())
@@ -61,7 +63,7 @@ export class Subreddit extends React.Component {
               ready: true
             };
           });
-          console.log(this.state.children);
+          // console.log(this.state.children);
           resolve("");
         });
       });
@@ -75,7 +77,7 @@ export class Subreddit extends React.Component {
     this.lastViewed = this.getLastViewed(subreddit);
 
     this.getPostData(subreddit).then(r => {
-      console.log("Current", r);
+      // console.log("Current", r);
     });
   }
 
@@ -118,6 +120,26 @@ export class Subreddit extends React.Component {
                   }}
                 >
                   <ListItem title={post.item.title} />
+                  {post.item.preview ? (
+                    //TODO: Fix preview part from temporary image display 
+                    <Image
+                      style={{ width: deviceWidth, height: 250 }}
+                      resizeMode={"contain"}
+                      source={{
+                        uri: post.item.preview.images[0].resolutions[3]
+                          ? post.item.preview.images[0].resolutions[3].url.replace(
+                              /&amp;/g,
+                              "&"
+                            )
+                          : post.item.preview.images[0].resolutions[0].url.replace(
+                              /&amp;/g,
+                              "&"
+                            )
+                      }}
+                    />
+                  ) : (
+                    <Text>No Preview</Text>
+                  )}
                 </TouchableOpacity>
               );
             }}
