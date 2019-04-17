@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-
 export class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +21,7 @@ export class Home extends React.Component {
     this.setState(prevState => ({
       subreddits: [..._subreddits]
     }));
+   
   }
 
   render() {

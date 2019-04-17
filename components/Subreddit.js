@@ -33,9 +33,9 @@ export class Subreddit extends React.Component {
     });
   }
 
-  getAfter(subreddit, before, after) {
+  getAfter(subreddit, after, before) {
     const url = `https://api.pushshift.io/reddit/submission/search/?subreddit=${subreddit}&after=${after}&before=${before}&size=100`;
-    console.log(url)
+    console.log(url);
     return new Promise((resolve, reject) => {
       fetch(url)
         .then(res => res.json())
@@ -53,10 +53,14 @@ export class Subreddit extends React.Component {
     return new Promise((resolve, reject) => {
       this.getCurrent(this.lastViewed).then(current => {
         const lastIdx = current.children.length - 1;
-        const after = current.children[lastIdx].data.created_utc;
-        const before =
-          moment("2019-04-12 16:00:00", "YYYY-MM-DD HH:mm:ss").valueOf() / 1000;
-        this.getAfter(subreddit, before, after).then(after => {
+        const currentEPOCH = current.children[lastIdx].data.created;
+        console.log(currentEPOCH);
+        const afterEPOCH = Number(currentEPOCH)-100;
+        const beforeEPOCH = Number(currentEPOCH)+100;
+        // const afterEPOCH = moment(Date(currentEPOCH)).subtract(10, "seconds").valueOf()/1000;
+        // const beforeEPOCH = moment(Date(currentEPOCH)).add(10, "seconds").valueOf()/1000;
+
+        this.getAfter(subreddit, afterEPOCH, beforeEPOCH).then(after => {
           this.setState(prevState => {
             return {
               children: [...prevState.children, ...after],
